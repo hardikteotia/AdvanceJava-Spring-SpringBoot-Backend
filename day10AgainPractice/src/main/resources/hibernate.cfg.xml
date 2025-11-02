@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+  <!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+	<!--it auto commits the transaction every time-->
+		<property name="hibernate.connection.autocommit">false</property>
+	<!--it provides the jdbc driver to connect with the database-->
+		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+	
+		<property name="hibernate.connection.password">MySQLHardik</property>
+	<!--This property tells Hibernate how to find and connect to your database. It's like giving someone a precise address to find a specific building.-->
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/libraryManagementSystem?createDatabaseIfNotExist=true&amp;useSSL=false&amp;allowPublicKeyRetrieval=true</property>
+		<property name="hibernate.connection.username">root</property>
+	<!--makes hibernate promise write ones run anywhere....Crucial bridge btw DB and Java Code-->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		
+		<property name="hibernate.current_session_context_class">thread</property>
+		<property name="hibernate.connection.pool_size">10</property>
+		<property name="hibernate.show_sql">true</property>		
+	<!--if there is no table it creates, if no column it creates, if no constraint it gives automatically-->
+		<property name="hibernate.hbm2ddl.auto">update</property>	
+	<!--This line tells your Hibernate configuration file (like hibernate.cfg.xml) to load and manage your com.libraryManagementSystem.Entities Java class.-->
+		<mapping class="com.libraryManagementSystem.Entities.Book"/>
+		<mapping class="com.libraryManagementSystem.Entities.Author"/>
+		<mapping class="com.libraryManagementSystem.Entities.Loan"/>
+		<mapping class="com.libraryManagementSystem.Entities.Member"/>
+	</session-factory>
+</hibernate-configuration>
