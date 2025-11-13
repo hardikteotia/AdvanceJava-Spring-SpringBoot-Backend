@@ -1,9 +1,11 @@
 package com.gym.service;
 
 import com.gym.entities.*;
+import com.gym.exception.MyException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import com.gym.dao.MemberDAO;
 import com.gym.dao.TrainerDAO;
 import com.gym.dto.MemberRequestDTO;
 import com.gym.dto.MemberResponseDTOAllMember;
+import com.gym.dto.SingleMemberResponseDTO;
 
 @Service
 public class MemberService {
@@ -64,6 +67,21 @@ public class MemberService {
 			dtoMembers.add(refObj);
 		}
 		return dtoMembers;
+	}
+
+	public SingleMemberResponseDTO callingOneMember(Long id) {
+		
+		SingleMemberResponseDTO singleMemberDTORef;
+		Member member = memberDaoRef.findById(id).orElseThrow(()-> new MyException("lol"));
+		
+		singleMemberDTORef =  mapper.map(member, SingleMemberResponseDTO.class);
+		singleMemberDTORef.setTrainerId(member.getTrainer().getTrainerId());
+			return singleMemberDTORef;
+	}
+
+	public void deleteOneMember(Long id) {
+		memberDaoRef.deleteById(id);
+		
 	}
 
 }

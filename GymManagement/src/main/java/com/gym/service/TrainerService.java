@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gym.dao.TrainerDAO;
+import com.gym.dto.SingleTrainerResponseDTO;
 import com.gym.dto.TrainerRequestDTO;
 import com.gym.dto.TrainerResponseDTOAllTrainer;
 import com.gym.entities.Trainer;
+import com.gym.exception.MyException;
 
 @Service
 public class TrainerService {
@@ -38,6 +40,20 @@ public class TrainerService {
 			trnRspObjList.add(t);
 		}
 		return trnRspObjList;
+	}
+
+
+	public SingleTrainerResponseDTO callingSingleTrainer(Long id) {
+		Trainer trainer = trainerDaoRefObj.findById(id).orElseThrow(()->new MyException("no trainer in database"));
+		
+		SingleTrainerResponseDTO singleTrainer = null;
+		singleTrainer = mapper.map(trainer, SingleTrainerResponseDTO.class);
+		return singleTrainer;
+	}
+
+
+	public void removingTrainer(Long id) {
+		trainerDaoRefObj.deleteById(id);
 	}
 	
 	
